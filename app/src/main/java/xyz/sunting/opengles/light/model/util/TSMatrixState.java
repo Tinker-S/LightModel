@@ -102,7 +102,7 @@ public class TSMatrixState {
         return mMVPMatrix;
     }
 
-    public void setLightLocation(float x, float y, float z) {
+    public void setLightPosition(float x, float y, float z) {
         mLightPosition[0] = x;
         mLightPosition[1] = y;
         mLightPosition[2] = z;

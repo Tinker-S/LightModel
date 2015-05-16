@@ -8,30 +8,33 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import xyz.sunting.opengles.light.model.TSApplication;
-import xyz.sunting.opengles.light.model.util.TSMatrixState;
 import xyz.sunting.opengles.light.model.util.TSShaderUtil;
 
-public class Ball {
+/**
+ * 球
+ */
+public class Ball extends Sprite {
     static final float UNIT_SIZE = 1.0f;
+    static final float DEFAULT_COLOR = 0.5f;
     static final float DEFAULT_RADIUS = 0.5f;
 
     int mProgram;
-    int muMVPMatrixHandle;
-    int maPositionHandle;
+    int mMVPMatrixHandle;
+    int mPositionHandle;
+    int mColorHandle;
 
     FloatBuffer mVertexBuffer;
     int vCount = 0;
 
     float mRadius;
+    float mColor;
 
-    TSMatrixState mState;
-
-    public Ball(TSMatrixState state) {
-        this(state, DEFAULT_RADIUS);
+    public Ball() {
+        this(DEFAULT_RADIUS, DEFAULT_COLOR);
     }
 
-    public Ball(TSMatrixState state, float radius) {
-        mState = state;
+    public Ball(float radius, float color) {
+        super();
         mRadius = radius;
 
         initVertexData();
@@ -107,16 +110,13 @@ public class Ball {
             }
         }
 
-        vCount = alVertix.size() / 3;// 顶点的数量为坐标值数量的1/3，因为一个顶点有3个坐标
+        vCount = alVertix.size() / 3;
 
-        // 将alVertix中的坐标值转存到一个float数组中
         float vertices[] = new float[vCount * 3];
         for (int i = 0; i < alVertix.size(); i++) {
             vertices[i] = alVertix.get(i);
         }
 
-        // 创建顶点坐标数据缓冲
-        // vertices.length*4是因为一个整数四个字节
         ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
         vbb.order(ByteOrder.nativeOrder());
         mVertexBuffer = vbb.asFloatBuffer();
@@ -125,19 +125,22 @@ public class Ball {
     }
 
     private void initShader() {
-        String vertexShader = TSShaderUtil.loadFromAssetsFile("normal_vertex.glsl", TSApplication.getInstance().getResources());
-        String fragmentShader = TSShaderUtil.loadFromAssetsFile("normal_frag.glsl", TSApplication.getInstance().getResources());
+        String vertexShader = TSShaderUtil.loadFromAssetsFile("ball_vertex.glsl", TSApplication.getInstance().getResources());
+        String fragmentShader = TSShaderUtil.loadFromAssetsFile("ball_frag.glsl", TSApplication.getInstance().getResources());
         mProgram = TSShaderUtil.createProgram(vertexShader, fragmentShader);
 
-        maPositionHandle = GLES20.glGetAttribLocation(mProgram, "aPosition");
-        muMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
+        mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
+        mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
+        mColorHandle = GLES20.glGetUniformLocation(mProgram, "u_Color");
     }
 
     public void drawSelf() {
         GLES20.glUseProgram(mProgram);
-        GLES20.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, mState.getMVPMatrix(), 0);
-        GLES20.glVertexAttribPointer(maPositionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, mVertexBuffer);
-        GLES20.glEnableVertexAttribArray(maPositionHandle);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mState.getMVPMatrix(), 0);
+        GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, mVertexBuffer);
+        GLES20.glEnableVertexAttribArray(mPositionHandle);
+
+        GLES20.glUniform1f(mColorHandle, mColor);
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vCount);
     }
