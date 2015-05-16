@@ -7,6 +7,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import xyz.sunting.opengles.light.model.graphics.Ball;
+import xyz.sunting.opengles.light.model.graphics.Point;
 import xyz.sunting.opengles.light.model.graphics.Rectangle;
 import xyz.sunting.opengles.light.model.graphics.Sprite;
 import xyz.sunting.opengles.light.model.graphics.Triangle;
@@ -27,7 +28,8 @@ public class TSRenderer implements GLSurfaceView.Renderer {
 
         // mSprite = new Triangle();
         // mSprite = new Rectangle();
-        mSprite = new Ball();
+        // mSprite = new Ball();
+        mSprite = new Point();
     }
 
     @Override
