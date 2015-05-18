@@ -3,6 +3,7 @@ package xyz.sunting.opengles.light.model.graphics;
 import android.opengl.GLES20;
 
 import xyz.sunting.opengles.light.model.TSApplication;
+import xyz.sunting.opengles.light.model.util.TSMatrixState;
 import xyz.sunting.opengles.light.model.util.TSShaderUtil;
 
 public class Point extends Sprite {
@@ -52,7 +53,7 @@ public class Point extends Sprite {
         GLES20.glVertexAttrib3f(mPositionHandle, mVertices[0], mVertices[1], mVertices[2]);
         GLES20.glDisableVertexAttribArray(mPositionHandle);
 
-        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mState.getMVPMatrix(), 0);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, TSMatrixState.getMVPMatrix(), 0);
         GLES20.glUniform1f(mColorHandle, mColor);
         GLES20.glUniform1f(mSizeHandle, mSize);
 

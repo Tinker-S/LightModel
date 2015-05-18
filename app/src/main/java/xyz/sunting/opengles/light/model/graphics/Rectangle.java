@@ -7,6 +7,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import xyz.sunting.opengles.light.model.TSApplication;
+import xyz.sunting.opengles.light.model.util.TSMatrixState;
 import xyz.sunting.opengles.light.model.util.TSShaderUtil;
 
 /**
@@ -62,7 +63,7 @@ public class Rectangle extends Sprite {
         GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false, 3 * mBytesPerFloat, mVertices);
         GLES20.glEnableVertexAttribArray(mPositionHandle);
 
-        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mState.getMVPMatrix(), 0);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, TSMatrixState.getMVPMatrix(), 0);
         GLES20.glUniform1f(mColorHandle, mColor);
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);

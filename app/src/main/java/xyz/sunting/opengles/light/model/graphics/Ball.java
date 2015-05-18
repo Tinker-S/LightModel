@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import xyz.sunting.opengles.light.model.TSApplication;
+import xyz.sunting.opengles.light.model.util.TSMatrixState;
 import xyz.sunting.opengles.light.model.util.TSShaderUtil;
 
 /**
@@ -36,6 +37,7 @@ public class Ball extends Sprite {
     public Ball(float radius, float color) {
         super();
         mRadius = radius;
+        mColor = color;
 
         initVertexData();
         initShader();
@@ -136,7 +138,7 @@ public class Ball extends Sprite {
 
     public void drawSelf() {
         GLES20.glUseProgram(mProgram);
-        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mState.getMVPMatrix(), 0);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, TSMatrixState.getMVPMatrix(), 0);
         GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, mVertexBuffer);
         GLES20.glEnableVertexAttribArray(mPositionHandle);
 
