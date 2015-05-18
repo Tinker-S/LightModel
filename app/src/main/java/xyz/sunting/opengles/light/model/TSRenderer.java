@@ -11,6 +11,7 @@ import xyz.sunting.opengles.light.model.graphics.Ball;
 import xyz.sunting.opengles.light.model.graphics.LightBall;
 import xyz.sunting.opengles.light.model.graphics.Point;
 import xyz.sunting.opengles.light.model.graphics.Rectangle;
+import xyz.sunting.opengles.light.model.graphics.SpecularLightBall;
 import xyz.sunting.opengles.light.model.graphics.Sprite;
 import xyz.sunting.opengles.light.model.graphics.Triangle;
 import xyz.sunting.opengles.light.model.util.TSMatrixState;
@@ -24,9 +25,9 @@ public class TSRenderer implements GLSurfaceView.Renderer {
     Sprite mBall;
     Sprite mRectangle;
     Sprite mLightBall;
+    Sprite mSpecularLightBall;
 
     float mAngle;
-    float mLightAngle;
 
     public TSRenderer() {
     }
@@ -41,6 +42,7 @@ public class TSRenderer implements GLSurfaceView.Renderer {
         mPoint = new Point();
         mBall = new Ball();
         mLightBall = new LightBall();
+        mSpecularLightBall = new SpecularLightBall();
 
         TSMatrixState.init();
 
@@ -50,7 +52,8 @@ public class TSRenderer implements GLSurfaceView.Renderer {
                 while (true) {
                     mAngle = (mAngle + 2f) % 360;
 
-                    setLightPosition(-mAngle);
+                    // setLightPosition(-mAngle);
+                    TSMatrixState.setLightPosition(-4, 4, 4);
 
                     try {
                         Thread.sleep(100);
@@ -66,8 +69,8 @@ public class TSRenderer implements GLSurfaceView.Renderer {
         GLES20.glViewport(0, 0, width, height);
         float ratio = (float) width / height;
 
-        //TSMatrixState.frustumM(-ratio, ratio, -1, 1, 1f, 10);
-        //TSMatrixState.setLookAtM(0, 0, 5, 0, 0, -1, 0, 1, 0);
+        TSMatrixState.frustumM(-ratio, ratio, -1, 1, 3f, 10);
+        TSMatrixState.setLookAtM(0, 0, 3, 0, 0, -1, 0, 1, 0);
     }
 
     @Override
@@ -75,9 +78,10 @@ public class TSRenderer implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
 
         TSMatrixState.push();
-        TSMatrixState.rotate(mAngle, 0, 1, 0);
+        // TSMatrixState.rotate(mAngle, 0, 1, 0);
         // mBall.drawSelf();
-        mLightBall.drawSelf();
+        // mLightBall.drawSelf();
+        mSpecularLightBall.drawSelf();
         TSMatrixState.pop();
     }
 

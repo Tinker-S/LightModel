@@ -17,6 +17,10 @@ public class TSMatrixState {
      */
     public static float[] mLightPosition = new float[]{0, 0, 0};
     /**
+     * 相机位置
+     */
+    public static float[] mCameraPosition = new float[] {0, 0, 0};
+     /**
      * 光源方向
      */
     public static float[] mLightDirection = new float[]{0, 0, 0};
@@ -90,6 +94,10 @@ public class TSMatrixState {
     public static void setLookAtM(float cx, float cy, float cz, float tx, float ty, float tz,
                                   float upx, float upy, float upz) {
         Matrix.setLookAtM(mViewMatrix, 0, cx, cy, cz, tx, ty, tz, upx, upy, upz);
+
+        mCameraPosition[0] = cx;
+        mCameraPosition[1] = cy;
+        mCameraPosition[2] = cz;
     }
 
     public static void frustumM(float left, float right, float bottom, float top, float near, float far) {
