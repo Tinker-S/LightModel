@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 
 public class TSMainActivity extends AppCompatActivity {
-    private static final int PADDING = 64;
+    private static final int PADDING = 16;
 
     GLSurfaceView mGlSurfaceView;
 
@@ -26,5 +26,4 @@ public class TSMainActivity extends AppCompatActivity {
         lp.height = widthPixels - PADDING;
         mGlSurfaceView.setLayoutParams(lp);
     }
-
 }

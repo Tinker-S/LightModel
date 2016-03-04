@@ -9,6 +9,8 @@ import android.util.Log;
  * @author tinker <sunting.bcwl@gmail.com>
  */
 public class TSMatrixState {
+    private static final String TAG = "MatrixState";
+
     private static final int MATRIX_F4V_SIZE = 16;
     private static final int MAX_STACK_SIZE = 32;
 
@@ -76,7 +78,7 @@ public class TSMatrixState {
         for (int i = 0; i < matrix.length; i++) {
             m = m + matrix[i] + " ";
         }
-        Log.d("Matrix", m);
+        Log.d(TAG, m);
     }
 
     public static void translate(float x, float y, float z) {

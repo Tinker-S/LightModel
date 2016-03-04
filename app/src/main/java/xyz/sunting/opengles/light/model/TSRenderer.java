@@ -67,10 +67,6 @@ public class TSRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         GLES20.glViewport(0, 0, width, height);
-        float ratio = (float) width / height;
-
-        TSMatrixState.frustumM(-ratio, ratio, -1, 1, 3f, 10);
-        TSMatrixState.setLookAtM(0, 0, 3, 0, 0, -1, 0, 1, 0);
     }
 
     @Override
